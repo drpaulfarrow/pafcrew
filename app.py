@@ -1,26 +1,35 @@
-from flask import Flask, render_template, request, redirect, url_for
+```plaintext
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_wtf import FlaskForm
+from wtforms import StringField, TextAreaField, SubmitField
+from wtforms.validators import DataRequired, Length
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'your_secret_key'
 
-# In-memory 'database'
-tasks = []
+# Feedback form using WTForms
+class FeedbackForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=50)])
+    email = StringField('Email', validators=[DataRequired(), Length(min=5, max=100)])
+    feedback = TextAreaField('Feedback', validators=[DataRequired(), Length(min=10)])
+    submit = SubmitField('Submit Feedback')
 
 @app.route('/')
-def index():
-    return render_template('index.html', tasks=tasks)
+def dashboard():
+    return render_template('dashboard.html')
 
-@app.route('/add', methods=['POST'])
-def add_task():
-    task = request.form.get('task')
-    if task:
-        tasks.append({'task': task, 'complete': False})
-    return redirect(url_for('index'))
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    form = FeedbackForm()
+    if form.validate_on_submit():
+        # Process the feedback (e.g., store in database or send via email)
+        flash('Thank you for your feedback!', 'success')
+        return redirect(url_for('thank_you'))
+    return render_template('feedback.html', form=form)
 
-@app.route('/complete/<int:task_id>')
-def complete_task(task_id):
-    if 0 <= task_id < len(tasks):
-        tasks[task_id]['complete'] = True
-    return redirect(url_for('index'))
+@app.route('/thank_you')
+def thank_you():
+    return render_template('thank_you.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
