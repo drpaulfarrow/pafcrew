@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualize Snowfall Data</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Visualize Snowfall Data</h1>
+        <div class="mt-4">
+            {{ graph_html|safe }}
+        </div>
+        <a class="btn btn-secondary mt-3" href="{{ url_for('index') }}">Back to Home</a>
+    </div>
+</body>
+</html>
+```
