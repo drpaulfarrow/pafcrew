@@ -1,35 +1,20 @@
-```plaintext
+```
 from flask import Flask, render_template, request, redirect, url_for, flash
-from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField
-from wtforms.validators import DataRequired, Length
+import os
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.secret_key = 'your_secret_key'  # Necessary for flash messaging
 
-# Feedback form using WTForms
-class FeedbackForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired(), Length(min=2, max=50)])
-    email = StringField('Email', validators=[DataRequired(), Length(min=5, max=100)])
-    feedback = TextAreaField('Feedback', validators=[DataRequired(), Length(min=10)])
-    submit = SubmitField('Submit Feedback')
-
+# Root route
 @app.route('/')
-def dashboard():
-    return render_template('dashboard.html')
+def index():
+    return render_template('index.html')
 
-@app.route('/feedback', methods=['GET', 'POST'])
-def feedback():
-    form = FeedbackForm()
-    if form.validate_on_submit():
-        # Process the feedback (e.g., store in database or send via email)
-        flash('Thank you for your feedback!', 'success')
-        return redirect(url_for('thank_you'))
-    return render_template('feedback.html', form=form)
-
-@app.route('/thank_you')
-def thank_you():
-    return render_template('thank_you.html')
+# Error handling example
+@app.errorhandler(404)
+def page_not_found(e):
+    flash('Page not found. Redirecting to home.')
+    return redirect(url_for('index'))
 
 if __name__ == '__main__':
     app.run(debug=True)
