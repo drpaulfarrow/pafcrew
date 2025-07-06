@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Internal Server Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>500 - Internal Server Error</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1 class="mt-5">500 - Internal Server Error</h1>
-        <p class="lead">An unexpected error has occurred. Please try again later.</p>
+    <div class="container mt-5 text-center">
+        <h1>500</h1>
+        <p>Internal server error. Please try again later or go back to <a href="{{ url_for('index') }}">home</a>.</p>
     </div>
 </body>
 </html>
