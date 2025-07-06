@@ -3,34 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snowfall Data Visualization</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <title>To-Do List</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="mb-4">To-Do List</h1>
-        <form action="{{ url_for('add_task') }}" method="post" class="form-inline mb-5">
-            <div class="form-group mr-2">
-                <input type="text" class="form-control" name="task" placeholder="New Task" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Add Task</button>
-        </form>
-        <ul class="list-group">
-        {% for task in tasks %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span>{{ task.task }}</span>
-                {% if not task.complete %}
-                <a href="{{ url_for('complete_task', task_id=loop.index0) }}" class="btn btn-success btn-sm">Complete</a>
-                {% else %}
-                <span class="badge badge-success badge-pill">Completed</span>
-                {% endif %}
-            </li>
-        {% endfor %}
-        </ul>
+    <div class="container">
+        <h1 class="mt-5">Snowfall Data Visualization</h1>
+        <a class="btn btn-primary mt-3" href="{{ url_for('upload_file') }}">Upload Data</a>
     </div>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-```
